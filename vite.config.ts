@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    allowedHosts: ["chatgenius-pro.onrender.com"], // ← Add this line
+    allowedHosts: ["chatgenius-uqla.onrender.com"], // ← Add this line
   },
   plugins: [
     react(),
