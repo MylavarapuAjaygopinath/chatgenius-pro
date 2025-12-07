@@ -141,9 +141,22 @@ export function useChat() {
   }, [messages, isLoading]);
 
   const clearChat = useCallback(async () => {
-    // Note: This only clears local state. Messages persist in database.
-    setMessages([]);
-    toast.success("Chat cleared locally");
+    try {
+      // Delete all messages from database
+      const { error } = await supabase.from("messages").delete().gte("id", "00000000-0000-0000-0000-000000000000");
+      
+      if (error) {
+        console.error("Error clearing chat:", error);
+        toast.error("Failed to clear chat");
+        return;
+      }
+      
+      setMessages([]);
+      toast.success("Chat cleared");
+    } catch (error) {
+      console.error("Error clearing chat:", error);
+      toast.error("Failed to clear chat");
+    }
   }, []);
 
   return {
